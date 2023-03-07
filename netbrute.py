@@ -164,6 +164,7 @@ def main():
         port_check = config_obj.parse_port(sys.argv[2])
         wordlist_check = config_obj.parse_wordlist(sys.argv[3])
         payload_check = config_obj.parse_payload(sys.argv[4])
+        config_obj.parse_out_path()
 
         # If the port arg parse failed #
         if not port_check:
