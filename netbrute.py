@@ -23,6 +23,10 @@ def brute_exec(conf_obj: object):
     :return:  Nothing
     """
     ret = 0
+    print(f'[+] Running NetBrute on {conf_obj.host}:{conf_obj.port} with payload {conf_obj.payload}'
+          f' and wordlist {conf_obj.wordlist.name}')
+    # Get the execution start time #
+    start_time = time.perf_counter()
     try:
         # Open wordlist to read line by line #
         with conf_obj.wordlist.open('r', encoding='utf-8') as wordlist_in, \
@@ -49,18 +53,18 @@ def brute_exec(conf_obj: object):
                     # Get response from remote host #
                     results = sock.recv(RESPONSE_BUFFER)
 
-                    # If output indicates success #
-                    if MATCH in results or NEGATION_MATCH not in results:
-                        # Display success and write to output file #
-                        print(f'[!] Success: {payload}')
-                        file_out.write(f'[!] Success: {payload}\n')
+                # If output indicates success #
+                if MATCH in results or NEGATION_MATCH not in results:
+                    # Display success and write to output file #
+                    print(f'[!] Payload matched: {payload}')
+                    file_out.write(f'[!] Payload matched: {payload}\n')
 
-        print("\n[!] NetBrute execution complete!!!")
+        print(f'\n[+] NetBrute execution finished at {time.perf_counter() - start_time}')
 
     # If error occurs during file or socket operation #
     except OSError as brute_err:
         print_err(f'Error occurred during brute force execution: {brute_err}')
-        ret = 1
+        ret = 2
 
     sys.exit(ret)
 
@@ -145,7 +149,7 @@ class ConfigClass:
 
         :return:  Nothing
         """
-        self.out_path = self.cwd / f'NetBrute_{self.host}_out.txt'
+        self.out_path = self.cwd / f'NetBrute_{self.host}_port{self.port}_out.txt'
 
 
 def main():
