@@ -26,7 +26,7 @@ is in the payload where he wordlist items will be parsed, and a match or a negat
 specify successful operation based on what is or is not found in the remote host's response.
 
 > SMTP user enumeration example:<br>
-> &emsp;&emsp;Payload (arg):&emsp;`"VRFY <@>\r\n"`<br>
+> &emsp;&emsp;Payload (arg):&emsp;`"VRFY <@>"`<br>
 > &emsp;&emsp;NEGATION_MATCH (global var):&emsp;'rejected'
 
 Before executing the script, ensure to look at the global variables section at the top of the script.
