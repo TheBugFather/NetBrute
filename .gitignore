@@ -1,2 +1,6 @@
 # Pycharm env #
 .idea/
+# venv #
+venv/
+# Scan output file #
+NetBrute*out.txt

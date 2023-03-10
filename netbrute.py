@@ -6,11 +6,11 @@ from pathlib import Path
 
 
 # Global variables #
-PARSE_DELIMITER = b'<@>'
+PARSE_DELIMITER = '<@>'
 RESPONSE_BUFFER = 1024
 SLEEP_INTERVAL = 1
-MATCH = None
-NEGATION_MATCH = None
+MATCH = ''
+NEGATION_MATCH = ''
 
 
 def brute_exec(conf_obj: object):
@@ -28,9 +28,9 @@ def brute_exec(conf_obj: object):
     # Get the execution start time #
     start_time = time.perf_counter()
     try:
-        # Open wordlist to read bytes mode #
-        with conf_obj.wordlist.open('rb', encoding='utf-8') as wordlist_in, \
-        conf_obj.out_path.open('wb', encoding='utf-8') as file_out:
+        # Open wordlist to read mode and output file as write bytes mode #
+        with conf_obj.wordlist.open('r', encoding='utf-8') as wordlist_in, \
+        conf_obj.out_path.open('w', encoding='utf-8') as file_out:
             # Iterate line by line #
             for line in wordlist_in:
                 # Strip any external extra whitespace #
@@ -49,14 +49,15 @@ def brute_exec(conf_obj: object):
                     # Grab the first chunk of banner #
                     sock.recv(RESPONSE_BUFFER)
                     # Send payload for desired purposes #
-                    sock.send(payload + b'\r\n')
+                    sock.send(payload.encode() + b'\r\n')
                     # Sleep to allow remote host to process payload #
                     time.sleep(SLEEP_INTERVAL)
                     # Get response from remote host #
                     results = sock.recv(RESPONSE_BUFFER)
 
                 # If output indicates success #
-                if MATCH in results or NEGATION_MATCH not in results:
+                if (MATCH and MATCH in results.decode()) or (NEGATION_MATCH \
+                and NEGATION_MATCH not in results.decode()):
                     # Display success and write to output file #
                     print(f'[!] Payload matched: {payload}')
                     file_out.write(f'[!] Payload matched: {payload}\n')
@@ -69,8 +70,16 @@ def brute_exec(conf_obj: object):
         # If the execution time is greate than a minute #
         if minute_calc > 1:
             # Print float time to get minutes and seconds #
-            minute, seconds = str(minute_calc).split('.')
-            print(f'\n[+] NetBrute execution finished in {minute} minutes and {seconds} seconds')
+            minutes, seconds = str(minute_calc).split('.')
+            # Get the leftmost digit of seconds #
+            seconds = int(str(seconds)[1:])
+            # If seconds is greater than 0 #
+            if seconds:
+                print(f'\n[+] NetBrute execution finished in {minutes} minutes and {seconds} seconds')
+            # If execution stopped directly on the minute #
+            else:
+                print(f'\n[+] NetBrute execution finished in {minutes} minutes')
+
         else:
             print(f'\n[+] NetBrute execution finished in {end_time - start_time} seconds')
 
@@ -153,7 +162,7 @@ class ConfigClass:
         if PARSE_DELIMITER not in payload:
             return False
 
-        self.payload = payload.encode()
+        self.payload = payload
         return True
 
     def parse_out_path(self: object):
