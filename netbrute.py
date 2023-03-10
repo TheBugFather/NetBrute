@@ -23,17 +23,22 @@ def brute_exec(conf_obj: object):
     :return:  Nothing
     """
     ret = 0
-    print('''\n
-  -__ /\\         _-_ _,,                 ,        
-    ||  \\           -/  )               ||        
-   /||__|| '\\/\\   ~||_<   ,._-_ \\ \\ =||=  _-_  
-   \||__||  || ;'    || \\   ||   || ||  ||  || \\ 
-    ||  |,  ||/      ,/--||  ||   || ||  ||  ||/   
-  _-||-_/   |/      _--_-'   \\,  \\/\\  \\, \\,/  
-    ||     (       (                               
-            -_-                                    
+    line_len = 54 + (len(conf_obj.host) + len(conf_obj.port) + len(conf_obj.payload)
+                     + len(conf_obj.wordlist.name))
+    print('=' * line_len)
+    print('''
+ _        _______ _________ ______   _______          _________ _______ 
+( (    /|(  ____ \\__   __/(  ___ \ (  ____ )|\     /|\__   __/(  ____ \
+|  \  ( || (    \/   ) (   | (   ) )| (    )|| )   ( |   ) (   | (    \/
+|   \ | || (__       | |   | (__/ / | (____)|| |   | |   | |   | (__    
+| (\ \) ||  __)      | |   |  __ (  |     __)| |   | |   | |   |  __)   
+| | \   || (         | |   | (  \ \ | (\ (   | |   | |   | |   | (      
+| )  \  || (____/\   | |   | )___) )| ) \ \__| (___) |   | |   | (____/\
+|/    )_)(_______/   )_(   |/ \___/ |/   \__/(_______)   )_(   (_______/
 ''')
-    print(f'\n\n[+] Running NetBrute on {conf_obj.host}:{conf_obj.port} with payload '
+    print('=' * line_len)
+
+    print(f'\n[+] Running NetBrute on {conf_obj.host}:{conf_obj.port} with payload '
           f'{conf_obj.payload} and wordlist {conf_obj.wordlist.name}')
     # Get the execution start time #
     start_time = time.perf_counter()
@@ -92,6 +97,8 @@ def brute_exec(conf_obj: object):
 
         else:
             print(f'\n[+] NetBrute execution finished in {end_time - start_time} seconds')
+
+        print('=' * line_len)
 
     # If error occurs during file or socket operation #
     except OSError as brute_err:
