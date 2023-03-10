@@ -23,7 +23,17 @@ def brute_exec(conf_obj: object):
     :return:  Nothing
     """
     ret = 0
-    print(f'\n[+] Running NetBrute on {conf_obj.host}:{conf_obj.port} with payload '
+    print('''\n
+  -__ /\\         _-_ _,,                 ,        
+    ||  \\           -/  )               ||        
+   /||__|| '\\/\\   ~||_<   ,._-_ \\ \\ =||=  _-_  
+   \||__||  || ;'    || \\   ||   || ||  ||  || \\ 
+    ||  |,  ||/      ,/--||  ||   || ||  ||  ||/   
+  _-||-_/   |/      _--_-'   \\,  \\/\\  \\, \\,/  
+    ||     (       (                               
+            -_-                                    
+''')
+    print(f'\n\n[+] Running NetBrute on {conf_obj.host}:{conf_obj.port} with payload '
           f'{conf_obj.payload} and wordlist {conf_obj.wordlist.name}')
     # Get the execution start time #
     start_time = time.perf_counter()
@@ -56,8 +66,8 @@ def brute_exec(conf_obj: object):
                     results = sock.recv(RESPONSE_BUFFER)
 
                 # If output indicates success #
-                if (MATCH and MATCH in results.decode()) or (NEGATION_MATCH \
-                and NEGATION_MATCH not in results.decode()):
+                if (MATCH and MATCH in results.decode()) \
+                or (NEGATION_MATCH and NEGATION_MATCH not in results.decode()):
                     # Display success and write to output file #
                     print(f'[!] Payload matched: {payload}')
                     file_out.write(f'[!] Payload matched: {payload}\n')
