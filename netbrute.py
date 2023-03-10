@@ -10,7 +10,7 @@ PARSE_DELIMITER = '<@>'
 RESPONSE_BUFFER = 1024
 SLEEP_INTERVAL = 1
 MATCH = ''
-NEGATION_MATCH = ''
+NEGATION_MATCH = 'rejected'
 
 
 def brute_exec(conf_obj: object):
@@ -23,17 +23,17 @@ def brute_exec(conf_obj: object):
     :return:  Nothing
     """
     ret = 0
-    line_len = 54 + (len(conf_obj.host) + len(conf_obj.port) + len(conf_obj.payload)
+    line_len = 54 + (len(conf_obj.host) + len(str(conf_obj.port)) + len(conf_obj.payload)
                      + len(conf_obj.wordlist.name))
     print('=' * line_len)
-    print('''
+    print('''\
  _        _______ _________ ______   _______          _________ _______ 
-( (    /|(  ____ \\__   __/(  ___ \ (  ____ )|\     /|\__   __/(  ____ \
+( (    /|(  ____ \\\\__   __/(  ___ \ (  ____ )|\     /|\__   __/(  ____ \\
 |  \  ( || (    \/   ) (   | (   ) )| (    )|| )   ( |   ) (   | (    \/
 |   \ | || (__       | |   | (__/ / | (____)|| |   | |   | |   | (__    
 | (\ \) ||  __)      | |   |  __ (  |     __)| |   | |   | |   |  __)   
 | | \   || (         | |   | (  \ \ | (\ (   | |   | |   | |   | (      
-| )  \  || (____/\   | |   | )___) )| ) \ \__| (___) |   | |   | (____/\
+| )  \  || (____/\   | |   | )___) )| ) \ \__| (___) |   | |   | (____/\\
 |/    )_)(_______/   )_(   |/ \___/ |/   \__/(_______)   )_(   (_______/
 ''')
     print('=' * line_len)
@@ -90,7 +90,8 @@ def brute_exec(conf_obj: object):
             seconds = int(str(seconds)[1:])
             # If seconds is greater than 0 #
             if seconds:
-                print(f'\n[+] NetBrute execution finished in {minutes} minutes and {seconds} seconds')
+                print(f'\n[+] NetBrute execution finished in {minutes}'
+                      f' minutes and {seconds} seconds')
             # If execution stopped directly on the minute #
             else:
                 print(f'\n[+] NetBrute execution finished in {minutes} minutes')
@@ -99,6 +100,10 @@ def brute_exec(conf_obj: object):
             print(f'\n[+] NetBrute execution finished in {end_time - start_time} seconds')
 
         print('=' * line_len)
+
+    # If ctrl + c is detected #
+    except KeyboardInterrupt:
+        print('\n[+] Ctrl + c detected .. exiting program')
 
     # If error occurs during file or socket operation #
     except OSError as brute_err:

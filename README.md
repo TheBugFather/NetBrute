@@ -1,4 +1,6 @@
 # NetBrute
+![alt text](https://github.com/ngimb64/NetBrute/blob/main/NetBrute.gif?raw=True)
+![alt text](https://github.com/ngimb64/NetBrute/blob/main/NetBrute.png?raw=True)
 
 ## Prereqs
 Made for Windows and Linux, written in Python 3.10.6
