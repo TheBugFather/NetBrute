@@ -10,7 +10,7 @@ PARSE_DELIMITER = '<@>'
 RESPONSE_BUFFER = 1024
 SLEEP_INTERVAL = 1
 MATCH = ''
-NEGATION_MATCH = 'rejected'
+NEGATION_MATCH = ''
 
 
 def brute_exec(conf_obj: object):
