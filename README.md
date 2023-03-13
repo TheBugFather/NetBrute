@@ -2,12 +2,18 @@
 ![alt text](https://github.com/ngimb64/NetBrute/blob/main/NetBrute.gif?raw=True)
 ![alt text](https://github.com/ngimb64/NetBrute/blob/main/NetBrute.png?raw=True)
 
-## Prereqs
-Made for Windows and Linux, written in Python 3.10.6
+## Notice
+> This tool may be used for legal purposes only.<br>
+> Users take full responsibility for any actions performed using this tool.<br>
+> The author accepts no liability for damage caused by this tool.<br>
+> If these terms are not acceptable to you, then do not use this tool.
 
 ## Purpose
 NetBrute is a dynamic tool to brute force connecting to network services and delivering
 payloads for purposes of enumeration.
+
+## Prereqs
+Made for Windows and Linux, written in Python 3.10.6
 
 ## Installation
 - Run the setup.py script to build a virtual environment and install all external packages in the created venv.
