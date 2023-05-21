@@ -1,6 +1,11 @@
-# NetBrute
+<div align="center" style="font-family: monospace">
+<h1>NetBrute</h1>
+&#9745;&#65039; Bandit verified &nbsp;|&nbsp; &#9745;&#65039; Synk verified &nbsp;|&nbsp; &#9745;&#65039; Pylint verified 10/10
+<br><br>
+
 ![alt text](https://github.com/ngimb64/NetBrute/blob/main/NetBrute.gif?raw=True)
 ![alt text](https://github.com/ngimb64/NetBrute/blob/main/NetBrute.png?raw=True)
+</div>
 
 ## Notice
 > This tool may be used for legal purposes only.<br>
@@ -11,6 +16,12 @@
 ## Purpose
 NetBrute is a dynamic tool to brute force connecting to network services and delivering
 payloads for purposes of enumeration.
+
+### License
+The program is licensed under [GNU Public License v3.0](LICENSE.md)
+
+### Contributions or Issues
+[CONTRIBUTING](CONTRIBUTING.md)
 
 ## Prereqs
 Made for Windows and Linux, written in Python 3.10.6
