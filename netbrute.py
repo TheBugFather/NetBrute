@@ -33,14 +33,14 @@ def brute_exec(conf_obj: object):
     line_len = 54 + (len(conf_obj.host) + len(str(conf_obj.port)) + len(conf_obj.payload)
                      + len(conf_obj.wordlist.name))
     print('=' * line_len)
-    print('''\
+    print(r'''
  _        _______ _________ ______   _______          _________ _______ 
-( (    /|(  ____ \\\\__   __/(  ___ \ (  ____ )|\     /|\__   __/(  ____ \\
+( (    /|(  ____ \\__   __/(  ___ \ (  ____ )|\     /|\__   __/(  ____ \
 |  \  ( || (    \/   ) (   | (   ) )| (    )|| )   ( |   ) (   | (    \/
 |   \ | || (__       | |   | (__/ / | (____)|| |   | |   | |   | (__    
 | (\ \) ||  __)      | |   |  __ (  |     __)| |   | |   | |   |  __)   
 | | \   || (         | |   | (  \ \ | (\ (   | |   | |   | |   | (      
-| )  \  || (____/\   | |   | )___) )| ) \ \__| (___) |   | |   | (____/\\
+| )  \  || (____/\   | |   | )___) )| ) \ \__| (___) |   | |   | (____/\
 |/    )_)(_______/   )_(   |/ \___/ |/   \__/(_______)   )_(   (_______/
 ''')
     print('=' * line_len)
@@ -70,7 +70,7 @@ def brute_exec(conf_obj: object):
                     sock.connect((conf_obj.host, conf_obj.port))
                     # Grab the first chunk of banner #
                     sock.recv(RESPONSE_BUFFER)
-                    # Send payload for desired purposes #
+                    # Send payload to remote connection #
                     sock.send(payload.encode() + b'\r\n')
                     # Sleep to allow remote host to process payload #
                     time.sleep(SLEEP_INTERVAL)
@@ -84,30 +84,6 @@ def brute_exec(conf_obj: object):
                     print(f'[!] Payload matched: {payload}')
                     file_out.write(f'[!] Payload matched: {payload}\n')
 
-        # Get the execution end time #
-        end_time = time.perf_counter()
-        # Divide by 60 to calculate time in minutes #
-        minute_calc = (end_time - start_time) / 60
-
-        # If the execution time is greate than a minute #
-        if minute_calc > 1:
-            # Print float time to get minutes and seconds #
-            minutes, seconds = str(minute_calc).split('.')
-            # Get the leftmost digit of seconds #
-            seconds = int(str(seconds)[1:])
-            # If seconds is greater than 0 #
-            if seconds:
-                print(f'\n[+] NetBrute execution finished in {minutes}'
-                      f' minutes and {seconds} seconds')
-            # If execution stopped directly on the minute #
-            else:
-                print(f'\n[+] NetBrute execution finished in {minutes} minutes')
-
-        else:
-            print(f'\n[+] NetBrute execution finished in {end_time - start_time} seconds')
-
-        print('=' * line_len)
-
     # If ctrl + c is detected #
     except KeyboardInterrupt:
         print('\n[+] Ctrl + c detected .. exiting program')
@@ -116,6 +92,30 @@ def brute_exec(conf_obj: object):
     except OSError as brute_err:
         print_err(f'Error occurred during brute force execution: {brute_err}')
         ret = 2
+
+    # Get the execution end time #
+    end_time = time.perf_counter()
+    # Divide by 60 to calculate time in minutes #
+    minute_calc = (end_time - start_time) / 60
+
+    # If the execution time is greate than a minute #
+    if minute_calc > 1:
+        # Split float time to get minutes and seconds #
+        minutes, seconds = str(minute_calc).split('.')
+        # Get the leftmost digit of seconds #
+        seconds = int(str(seconds)[1:])
+        # If seconds is greater than 0 #
+        if seconds:
+            print(f'\n[+] NetBrute execution finished in {minutes}'
+                  f' minutes and {seconds} seconds')
+        # If execution stopped directly on the minute #
+        else:
+            print(f'\n[+] NetBrute execution finished in {minutes} minutes')
+
+    else:
+        print(f'\n[+] NetBrute execution finished in {end_time - start_time} seconds')
+
+    print('=' * line_len)
 
     sys.exit(ret)
 
